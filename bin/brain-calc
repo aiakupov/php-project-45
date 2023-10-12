@@ -5,6 +5,6 @@ namespace BrainGames;
 
 require_once(__DIR__ . '/../vendor/autoload.php');
 
-use BrainGames\Even;
+use BrainGames\Calc;
 
-Even\init();
+Calc\init();
