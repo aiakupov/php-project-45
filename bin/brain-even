@@ -1,0 +1,53 @@
+#!/usr/bin/env php
+<?php
+
+namespace BrainGames;
+
+require_once(__DIR__ . '/../vendor/autoload.php');
+
+use function BrainGames\Cli\welcome;
+
+use function cli\line;
+use function cli\prompt;
+
+function isEven($value): bool
+{
+    return $value % 2 == 0;
+}
+
+function correctAnswer(): void
+{
+    line('Correct!');
+}
+
+function incorrectAnswer($badAnswer, $correctAnswer): void
+{
+    line("'{$badAnswer}' is wrong answer ;(. Correct answer was '{$correctAnswer}'.");
+}
+
+function win($name): void
+{
+    line("Congratulations, {$name}!");
+}
+
+function lose($name): void
+{
+    line("Let's try again, {$name}!");
+}
+
+$name = welcome();
+line('Answer "yes" if the number is even, otherwise answer "no".');
+for ($i = 0; $i < 3; $i++) {
+    $randNumber = rand(1, 100);
+    line("Question: {$randNumber}");
+    $answer = prompt("Your answer: ");
+    $correctAnswer = isEven($randNumber) ? 'yes' : 'no';
+    if ($answer == $correctAnswer) {
+        correctAnswer();
+    } else {
+        incorrectAnswer($answer, $correctAnswer);
+        lose($name);
+        die();
+    }
+}
+win($name);
